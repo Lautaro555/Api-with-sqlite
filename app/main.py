@@ -5,6 +5,7 @@ app=FastAPI()
 
 #Conection to the database and cursor creation
 conn = sqlite3.connect('Database.db',check_same_thread=False)
+
 cur = conn.cursor()
 
 #Function to obtain maximum duration in minutes or seasons, of the specified platform and year
