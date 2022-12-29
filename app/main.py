@@ -3,10 +3,11 @@ import sqlite3
 
 app=FastAPI()
 
+#Conection to the database and cursor creation
 conn = sqlite3.connect('database.db',check_same_thread=False)
 cur = conn.cursor()
 
-#Aqui se crean funciones que retornan las funciones de function.py con los parametros introducidos
+#Function to obtain maximum duration in minutes or seasons, of the specified platform and year
 @app.get("/get-max-duration/{year-platform-duration}")
 async def get_max_duration(año:int, plataforma:str, duration_type:str):
     if duration_type=="min":
@@ -15,6 +16,7 @@ async def get_max_duration(año:int, plataforma:str, duration_type:str):
         cur.execute(f"SELECT title FROM {plataforma} WHERE release_year={año} AND type='TV Show' ORDER BY duration DESC LIMIT 1")
     return cur.fetchone()[0]
 
+#Function to obtain the number of movies and series of the specified platform
 @app.get("/get-count-plataform/{plataforma}")
 async def get_count_plataform(plataforma):
     cur.execute(f"SELECT COUNT(*) FROM {plataforma} WHERE type == 'Movie'")
@@ -24,6 +26,7 @@ async def get_count_plataform(plataforma):
     dict={"Number of series":int(series),"Number of movies":int(movies)}
     return dict
 
+#Function to obtain the platform in which the specified genre is most repeated
 @app.get("/get-listedin/{genero}")
 async def get_listedin(genero:str):
     amazon_count = 0
@@ -53,6 +56,7 @@ async def get_listedin(genero:str):
     max_platform = key = [key for key, val in dict_count.items() if val == max_value][0]
     return max_platform, max_value
 
+#Function to obtain the number of times an actor or actress is repeated and their name, on the specified platform and year
 @app.get("/get_actor/{platform-year}")
 async def get_actor(plataforma:str, año:int):
     cur.execute(f"SELECT {plataforma}.cast FROM {plataforma} WHERE release_year={año}")
