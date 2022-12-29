@@ -4,7 +4,7 @@ import sqlite3
 app=FastAPI()
 
 #Conection to the database and cursor creation
-conn = sqlite3.connect('database.db',check_same_thread=False)
+conn = sqlite3.connect('Database.db',check_same_thread=False)
 cur = conn.cursor()
 
 #Function to obtain maximum duration in minutes or seasons, of the specified platform and year
@@ -80,4 +80,3 @@ async def get_actor(plataforma:str, año:int):
     max_value=max(dict.values())
     max_actor= [key for key, val in dict.items() if val == max_value][0]
     return max_actor , max_value
-
