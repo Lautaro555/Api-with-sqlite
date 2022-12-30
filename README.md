@@ -1,37 +1,39 @@
-# FastAPI-Docker-pandas
+# API with SQLite
 
-El proyecto consiste en realizar una ingesta de datos desde diversas fuentes, posteriormente aplicar las transformaciones  pertinentes, y luego disponibilizar los datos limpios para su consulta a través de una API. Para esta API se utilizo FastAPI y luego se creo un entorno virtual con docker para su uso.
-
----
-
-### Paso 1:
-
-Se cargaron los datasets que se encuentran en \Datasets_original y se realizo limpieza, cambios de columnas y de tipo de datos. Estos cambios se encuentran detallados en \Data_cleansing\Clean.ipynb
-
-Los cuatro datasets fueron combinados en un solo archivo para su posterior ingesta y uso.
-
-### Paso 2:
-
-Luego se creo el archivo functions.py en donde se encuentran las funciones que se van a utilizar luego en el archivo main.py. Dichas funciones utilizan un dataframe creado con el archivo df.csv previamente generado en el paso 1.
-
-### Paso 3:
-
-El archivo main.py se configuro para poder crear la app con FastAPI, este archivo a su vez toma las funciones del archivo functions.py. Esto se hizo para mantener el codigo de forma mas ordenada.
-
-### Paso 4:
-
-Se crea un dockerfile con la configuracion para crear la imagen de docker, luego se ejecuta el comando para crear la imagen de docker, en este caso llamada "fastapi"
-
-```
-docker build -t fastapi .
-```
-
-### Paso 5:
-
-La imagen se ejecuta usando `docker run -d --name container -p 8000:8000 fastapi `y se abre en el navegador `localhost:8000/docs` desde donde se podran ejecutar las consultas requeridas.
+The project consists of ingesting data from various sources, subsequently applying the relevant transformations, and then providing the clean data for consultation through an API. The API is create with FastAPI, the functions for the consult are made with SQLite and then a virtual environment with docker was created for its use with mogenius.
 
 ---
 
-## Conclusiones
+### Step 1:
 
-Para esta API elegi utilizar solo pandas y funciones basicas de python como el loop for, etc. para evitar añadirle mas complejidad a herramientas como FastAPI o Docker, las cuales utilizo por primera vez, y evitar futuros errores. De todas formas con este proyecto aprendi el uso basico de estas herramientas, como utilizarlas conjuntamente y su utilidad para futuras API.
+The datasets found in \Datasets_original were loaded and cleaning, column and data type changes were performed. These changes are detailed in Create_database.ipynb
+
+The four modified datasets were inserted into tables and saved in the Database.db file using the sqlite library.
+
+### Step 2:
+
+The main.py file is configured to be able to create the application with FastAPI, this file in turn contains the functions where the queries will be made. The functions were made using the SQLite library which takes the data from the Database.db file.
+
+### Step 3:
+
+A dockerfile is created with the configuration to create the docker image, then the command to create the docker image is executed, in this case called "sql_api"
+
+```
+Docker build -t sql_api .
+```
+
+### Step 4:
+
+The image is run using `docker run -d --name container -p 8000:8000 sql_api `and opened in the `localhost:8000/docs` browser to run the required queries. This step was done to verify that the container and the app are working.
+
+### Step 5:
+
+The github repository is connected to mogenius, from where the dockerfile is executed. It is verified that all the app works by entering from the link provided by mongenius, which in my case is this [Link](https://fastapi-docker-prod-api-with-sqlite-lf0bdt.mo5.mogenius.io/docs)
+
+---
+
+
+
+## Conclusions
+
+For this API I chose to use SQLite to facilitate the queries and basic python functions to avoid adding more complexity to tools like FastAPI or Docker, which is the first time i used them, and to avoid future errors. Still, with this project I learned the basic use of these tools, how to use them together and their usefulness for future APIs.
