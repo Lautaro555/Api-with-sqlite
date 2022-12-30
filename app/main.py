@@ -4,7 +4,7 @@ import sqlite3
 app=FastAPI()
 
 #Conection to the database and cursor creation
-conn = sqlite3.connect('Database.db',check_same_thread=False)
+conn = sqlite3.connect('Database.db')
 
 cur = conn.cursor()
 
